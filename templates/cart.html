@@ -1,12 +1,50 @@
 {% extends 'base.html' %}
 {% block body %}
-<table class="table table-striped">
-    <tr><th>Melon Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>
-    <tr><td>Ancient Watermelon</td><td>5</td><td>$3.00</td><td>$15.00</td></tr>
-    <tr><td>Charleston Gray Watermelon</td><td>2</td><td>$2.00</td><td>$4.00</td></tr>
-    <tr><td>Crenshaw</td><td>1</td><td>$2.00</td><td>$2.00</td></tr>
-    <tr><td>Ledmon Watermelon</td><td>2</td><td>$3.00</td><td>$6.00</td></tr>
+<table class="table table-striped" >
+
+    <tr><th>Price</th><th>Total</th><th>Melon</th><th>Quantity</th></tr>
+    {% for key, value in melons.iteritems() %}
+       <!--  {% for key, value in value.iteritems() %}
+            <td>  {{ key }} </td>
+        {% endfor %} -->
+       <!--  <tr> -->
+    {% endfor %}
+
+    {% for key, value in melons.iteritems() %}
+        {% for key, value in value.iteritems() %}
+            <td> {{ value }} </td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    
 </table>
-<h3>Total: $27.00</h3>
+<h3>Total: {{order_price}}</h3>
 <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
 {% endblock %}
+
+
+
+<!-- 
+    melons = {}
+
+    for key in session['cart']:
+        melon = model.get_melon_by_id(key)
+        melons[key] = {
+            'name': melon.common_name, 
+            'price': melon.price, 
+            'quantity' : session['cart'][key],
+            'totalprice' : melon.price * session['cart'][key]
+        }   
+    get list of keys for one melon maybe from data strcutre or maybe from python?
+    for key in list of keys:
+    <tr><td>{{key}}</td></tr>
+ -->
+<!-- 
+    for item in cart
+        for key in list of keys
+            item[key]
+
+    list_keys = []
+    for key, value in melons.iteritems()
+        for keys in list_keys:
+            print values -->

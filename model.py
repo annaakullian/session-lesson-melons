@@ -17,6 +17,7 @@ class Melon(object):
 
     def __repr__(self):
         return "<Melon: %s, %s, %s>"%(self.id, self.common_name, self.price_str())
+        #repr method
 
 class Customer(object):
     pass
@@ -33,7 +34,7 @@ def get_melons():
                       price, imgurl,
                       flesh_color, rind_color, seedless
                FROM melons
-               WHERE imgurl <> ''
+               WHERE imgurl <> '' 
                LIMIT 30;"""
 
     cursor.execute(query)
@@ -46,8 +47,6 @@ def get_melons():
                       row[6], row[7])
 
         melons.append(melon)
-
-    print melons
 
     return melons
 

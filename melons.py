@@ -33,9 +33,26 @@ def shopping_cart():
     """TODO: Display the contents of the shopping cart. The shopping cart is a
     list held in the session that contains all the melons to be added. Check
     accompanying screenshots for details."""
-    return render_template("cart.html")
+    
+    melons = {}
 
-@app.route("/add_to_cart/<int:id>")
+    order_price = 0
+    for key in session['cart']:
+        melon = model.get_melon_by_id(key)
+        melons[key] = {
+            'name': melon.common_name, 
+            'price': melon.price, 
+            'quantity' : session['cart'][key],
+            'totalprice' : melon.price * session['cart'][key]
+        }
+        order_price += melons[key]['totalprice']
+        print order_price
+
+    print melons
+    order_price = "%.2f" % order_price
+    return render_template("cart.html", melons = melons, order_price = order_price) # could we pull this all off without redirecting to cart?
+
+@app.route("/add_to_cart/<int:id>", methods=["GET"])
 def add_to_cart(id):
     """TODO: Finish shopping cart functionality using session variables to hold
     cart list.
@@ -44,8 +61,20 @@ def add_to_cart(id):
     shopping cart page, while displaying the message
     "Successfully added to cart" """
 
-    return "Oops! This needs to be implemented!"
+    id = str(id) #we cast this to a string because
+    if "cart" in session:
+        if id in session['cart']:
+            session['cart'][id] += 1
+        else:
+            session['cart'][id] = 1
+    else:
+        session['cart'] = {id:1}
+    
+    print "Succesfully added to cart!"
 
+   
+
+    return redirect("/cart") 
 
 @app.route("/login", methods=["GET"])
 def show_login():
