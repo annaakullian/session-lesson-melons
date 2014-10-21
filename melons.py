@@ -34,7 +34,7 @@ def shopping_cart():
     list held in the session that contains all the melons to be added. Check
     accompanying screenshots for details."""
     
-    melons = {}
+    melons = {} # create an array of melon objects
 
     order_price = 0
     for key in session['cart']:
@@ -85,7 +85,19 @@ def show_login():
 def process_login():
     """TODO: Receive the user's login credentials located in the 'request.form'
     dictionary, look up the user, and store them in the session."""
-    return "Oops! This needs to be implemented"
+    
+    user_name = request.form['email']
+    password = request.form['password']
+    if "login" in session:
+        if user_name in session["login"]:
+            session["login"][user_name] = password
+    else:
+        session["login"] = {user_name: password}
+
+    print user_name
+    print password
+    print session
+    return render_template("index.html")
 
 
 @app.route("/checkout")
