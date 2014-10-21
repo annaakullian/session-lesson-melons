@@ -97,7 +97,10 @@ def process_login():
     print user_name
     print password
     print session
+    # user = model.get_customer_by_email(user_name)
     return render_template("index.html")
+
+
 
 
 @app.route("/checkout")
